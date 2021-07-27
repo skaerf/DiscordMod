@@ -1,5 +1,6 @@
 package net.skaerf.discordmod;
 
+import net.skaerf.discordmod.cmds.DiscordCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -7,14 +8,28 @@ import java.util.logging.Logger;
 
 public class DiscordMod extends JavaPlugin {
 
-    static Logger console = Bukkit.getLogger();
+    public static Logger console = Bukkit.getLogger();
+    ConfigManager CFGm = new ConfigManager();
 
     @Override
     public void onEnable() {
-        console.info("Starting");
-        console.info("Loading Discord bot..");
+        console.info("[DiscordMod] Starting");
+        console.info("[DiscordMod] Loading Discord bot..");
+        Bot.setDefaultChannel("734692426798858290");
+        getCommand("discord").setExecutor(new DiscordCommand());
         getServer().getPluginManager().registerEvents(new Events(), this);
         Bot.load();
+        if (!getDataFolder().exists()) {
+            getDataFolder().mkdir();
+        }
+        CFGm.createBotFile();
+        CFGm.createDataFile();
+        CFGm.reloadBotFile();
+        //this.saveConfig();
+    }
+
+    public void onDisable() {
+        Bot.sendMessageToDefault("**Server has stopped**");
     }
 
 }

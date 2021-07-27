@@ -6,16 +6,25 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 public class Events implements Listener {
 
-    @EventHandler
-    public void onJoin(PlayerJoinEvent event) {
-
-    }
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onChat(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
-        Bot.sendMessage("734692426798858290", player.getName()+": `"+event.getMessage()+"`");
+        Bot.sendMessage("734692426798858290",player.getName()+": `"+event.getMessage()+"`");
+    }
+
+    @EventHandler
+    public void onJoin(PlayerJoinEvent event) {
+        Player player = event.getPlayer();
+        Bot.sendMessage("734692426798858290","**"+player.getName()+" joined the server**");
+    }
+
+    @EventHandler
+    public void onLeave(PlayerQuitEvent event) {
+        Player player = event.getPlayer();
+        Bot.sendMessage("734692426798858290","**"+player.getName()+" left the server**");
     }
 }

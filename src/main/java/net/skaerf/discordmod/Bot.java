@@ -4,33 +4,17 @@ import net.dv8tion.jda.api.*;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.api.hooks.IEventManager;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.dv8tion.jda.api.managers.AudioManager;
-import net.dv8tion.jda.api.managers.DirectAudioController;
-import net.dv8tion.jda.api.managers.Presence;
 import net.dv8tion.jda.api.requests.GatewayIntent;
-import net.dv8tion.jda.api.requests.RestAction;
-import net.dv8tion.jda.api.requests.restaction.GuildAction;
-import net.dv8tion.jda.api.sharding.ShardManager;
-import net.dv8tion.jda.api.utils.cache.CacheView;
-import net.dv8tion.jda.api.utils.cache.SnowflakeCacheView;
-import okhttp3.OkHttpClient;
 import org.bukkit.Bukkit;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.security.auth.login.LoginException;
-import java.util.Collection;
-import java.util.EnumSet;
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.ScheduledExecutorService;
 
 public class Bot extends ListenerAdapter {
 
     public static JDA jda;
+    public Messages msgClass;
+    static String defaultChannel;
 
 
     public static void sendMessage(String channelID, String message) {
@@ -38,9 +22,18 @@ public class Bot extends ListenerAdapter {
         channel.sendMessage(message).queue();
     }
 
+    public static void sendMessageToDefault(String message) {
+        TextChannel channel = jda.getTextChannelById(defaultChannel);
+        channel.sendMessage(message).queue();
+    }
+
+    public static void setDefaultChannel(String channelID) {
+        defaultChannel = channelID;
+    }
+
     public static void load() {
         try {
-            startBot("NzM0NDk0MjA2NjA0NjA3NjA5.XxTk6w.OGzsxL9EeCjpwJzSpk0icPVgsBY");
+            startBot("NzM0NDk0MjA2NjA0NjA3NjA5.Xxhv4Q.PoU05Cb5EAdSbKhJaB4kYbZh9bA");
         } catch (LoginException e) {
             e.printStackTrace();
         }
@@ -52,13 +45,14 @@ public class Bot extends ListenerAdapter {
         try {
             jda = JDABuilder.createLight(token, GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES)
                     .addEventListeners(new Bot())
-                    .setActivity(Activity.playing("hello"))
+                    .setActivity(Activity.playing("skaerfMC | v0.0.7"))
                     .setStatus(OnlineStatus.DO_NOT_DISTURB)
                     .build();
         }
         catch (LoginException e) {
 
         }
+        Bot.sendMessageToDefault("**Server has started**");
     }
 
     @Override
@@ -66,10 +60,14 @@ public class Bot extends ListenerAdapter {
         Message msg = event.getMessage();
         MessageChannel channel = event.getChannel();
         if (channel.getType().equals(ChannelType.PRIVATE) && !event.getAuthor().isBot()) {
-            channel.sendMessage("test").queue();
+            channel.sendMessage("lol i got a dm").queue();
         }
-        if (channel.getName().equalsIgnoreCase("discordmod") && !event.getAuthor().isBot()) {
-            channel.sendMessage(net.skaerf.discordmod.Message.parseMessage(msg.toString())).queue();
+        if (channel.getId().equalsIgnoreCase("734692426798858290") && !event.getAuthor().isBot()) {
+            Bukkit.broadcastMessage(msgClass.parseMessage(msg));
+        }
+        if (channel.getId().equalsIgnoreCase("734735980568772649") && !event.getAuthor().isBot()) {
+            channel.sendMessage("Sending command to server...").queue();
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), msg.getContentRaw());
         }
     }
 }

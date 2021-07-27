@@ -1,8 +1,13 @@
 name: DiscordMod
-version: 0.0.5-DEV
+version: 0.1.2-DEV
 main: net.skaerf.discordmod.DiscordMod
 authors: [skaerf]
 load: STARTUP
 prefix: DiscordMod
 description: The easy way to have links between Minecraft and Discord!
 website: skaerf.xyz
+commands:
+
+  discord:
+    aliases: [disc]
+    usage: /discord [link]
