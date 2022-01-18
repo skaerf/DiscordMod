@@ -13,18 +13,18 @@ public class Events implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onChat(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
-        Bot.sendMessage("734692426798858290",player.getName()+": `"+event.getMessage()+"`");
+        Bot.sendMessage("933078390259482644",player.getName()+": `"+event.getMessage()+"`");
     }
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        Bot.sendMessage("734692426798858290","**"+player.getName()+" joined the server**");
+        Bot.sendMessage("933078390259482644","**"+player.getName()+" joined the server**");
     }
 
     @EventHandler
     public void onLeave(PlayerQuitEvent event) {
         Player player = event.getPlayer();
-        Bot.sendMessage("734692426798858290","**"+player.getName()+" left the server**");
+        Bot.sendMessage("933078390259482644","**"+player.getName()+" left the server**");
     }
 }

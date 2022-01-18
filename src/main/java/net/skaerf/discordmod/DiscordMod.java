@@ -15,8 +15,8 @@ public class DiscordMod extends JavaPlugin {
     public void onEnable() {
         console.info("[DiscordMod] Starting");
         console.info("[DiscordMod] Loading Discord bot..");
-        Bot.setDefaultChannel("734692426798858290");
-        getCommand("discord").setExecutor(new DiscordCommand());
+        Bot.setDefaultChannel("933078390259482644");
+        //getCommand("discord").setExecutor(new DiscordCommand()); BLANKED BECAUSE ALREADY HAVE A DISCORD COMMAND - THIS IS NOT NEEDED
         getServer().getPluginManager().registerEvents(new Events(), this);
         Bot.load();
         if (!getDataFolder().exists()) {
@@ -29,7 +29,7 @@ public class DiscordMod extends JavaPlugin {
     }
 
     public void onDisable() {
-        Bot.sendMessageToDefault("**Server has stopped**");
+        //Bot.sendMessageToDefault("**Server has stopped**");
     }
 
 }
