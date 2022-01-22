@@ -17,6 +17,7 @@ public class ConfigManager {
         bot = new File(DiscordMod.getPlugin(DiscordMod.class).getDataFolder(), "bot.yml");
         if (!bot.exists()) {
             try {
+                //noinspection ResultOfMethodCallIgnored
                 bot.createNewFile();
                 botcfg = YamlConfiguration.loadConfiguration(bot);
                 getBotFile().addDefault("token", "TOKEN");
@@ -57,6 +58,7 @@ public class ConfigManager {
         data = new File(DiscordMod.getPlugin(DiscordMod.class).getDataFolder(), "data.yml");
         if (!data.exists()) {
             try {
+                //noinspection ResultOfMethodCallIgnored
                 data.createNewFile();
             }
             catch (IOException e) {
