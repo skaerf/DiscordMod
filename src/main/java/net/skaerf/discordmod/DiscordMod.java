@@ -15,21 +15,22 @@ public class DiscordMod extends JavaPlugin {
     public void onEnable() {
         console.info("[DiscordMod] Starting");
         console.info("[DiscordMod] Loading Discord bot..");
-        Bot.setDefaultChannel("933078390259482644");
-        //getCommand("discord").setExecutor(new DiscordCommand()); BLANKED BECAUSE ALREADY HAVE A DISCORD COMMAND - THIS IS NOT NEEDED
+        getCommand("discord").setExecutor(new DiscordCommand());
         getServer().getPluginManager().registerEvents(new Events(), this);
-        Bot.load();
         if (!getDataFolder().exists()) {
             getDataFolder().mkdir();
         }
         CFGm.createBotFile();
         CFGm.createDataFile();
         CFGm.reloadBotFile();
-        //this.saveConfig();
+        Bot.token = CFGm.getBotFile().getString("token");
+        Bot.setDefaultChannel(CFGm.getBotFile().getString("default-channel"));
+        Bot.status = CFGm.getBotFile().getString("bot-status");
+        Bot.load();
     }
 
     public void onDisable() {
-        //Bot.sendMessageToDefault("**Server has stopped**");
+        //Bot.sendMessageToDefault("**Server has stopped**"); FIX THIS. ON BOT INIT, BUKKIT RUNNABLE REPEATING SEND UNTIL DISCORD CONFIRMS IT WORKED
     }
 
 }

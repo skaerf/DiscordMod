@@ -13,18 +13,23 @@ import javax.security.auth.login.LoginException;
 public class Bot extends ListenerAdapter {
 
     public static JDA jda;
-    public Messages msgClass;
     static String defaultChannel;
+    static String token;
+    static String status;
 
 
     public static void sendMessage(String channelID, String message) {
         TextChannel channel = jda.getTextChannelById(channelID);
-        channel.sendMessage(message).queue();
+        if (channel != null) {
+            channel.sendMessage(message).queue();
+        }
     }
 
     public static void sendMessageToDefault(String message) {
         TextChannel channel = jda.getTextChannelById(defaultChannel);
-        channel.sendMessage(message).queue();
+        if (channel != null) {
+            channel.sendMessage(message).queue();
+        }
     }
 
     public static void setDefaultChannel(String channelID) {
@@ -33,14 +38,13 @@ public class Bot extends ListenerAdapter {
 
     public static void load() {
         try {
-            startBot("OTMzMDc3NjgyMTAxNTc5Nzk2.YecSTw.LKe68iBHLW1aDVqJKjjo5WQm9TI");
+            startBot(token);
         } catch (LoginException e) {
             e.printStackTrace();
         }
     }
 
     public static void startBot(String token) throws LoginException {
-        JDABuilder builder = JDABuilder.createDefault(token);
         jda = JDABuilder.createLight(token, GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES)
                 .addEventListeners(new Bot())
                 .setActivity(Activity.playing("SSMC | v0.0.7"))
@@ -57,7 +61,7 @@ public class Bot extends ListenerAdapter {
             channel.sendMessage("lol i got a dm").queue();
         }
         if (channel.getId().equalsIgnoreCase("933078390259482644") && !event.getAuthor().isBot()) {
-            Bukkit.broadcastMessage(msgClass.parseMessage(msg));
+            Bukkit.broadcastMessage(Messages.parseMessage(msg));
         }
         if (channel.getId().equalsIgnoreCase("734735980568772649") && !event.getAuthor().isBot()) {
             channel.sendMessage("Sending command to server...").queue();

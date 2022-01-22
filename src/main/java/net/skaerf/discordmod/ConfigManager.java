@@ -2,7 +2,6 @@ package net.skaerf.discordmod;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,13 +18,22 @@ public class ConfigManager {
         if (!bot.exists()) {
             try {
                 bot.createNewFile();
+                botcfg = YamlConfiguration.loadConfiguration(bot);
+                getBotFile().addDefault("token", "TOKEN");
+                getBotFile().addDefault("default-channel", "DEFAULT CHANNEL ID");
+                getBotFile().addDefault("bot-status", "DiscordMod");
+                getBotFile().addDefault("discord-link-msg", "DISCORD LINK");
+                getBotFile().options().copyDefaults(true);
+                saveBotFile();
             }
             catch (IOException e) {
                 e.printStackTrace();
                 DiscordMod.console.info("[DiscordMod] Could not create the bot.yml file.");
             }
         }
-        botcfg = YamlConfiguration.loadConfiguration(bot);
+        else {
+            botcfg = YamlConfiguration.loadConfiguration(bot);
+        }
     }
 
     public FileConfiguration getBotFile() {
