@@ -14,12 +14,13 @@ public class Bot extends ListenerAdapter {
 
     public static JDA jda;
     static String defaultChannel;
+    static String consoleChannel;
     static String token;
     static String status;
 
 
-    public static void sendMessage(String channelID, String message) {
-        TextChannel channel = jda.getTextChannelById(channelID);
+    public static void sendMessageToConsoleChannel(String message) { // MAKE LOG4J CATCHER
+        TextChannel channel = jda.getTextChannelById(consoleChannel);
         if (channel != null) {
             channel.sendMessage(message).queue();
         }
@@ -65,7 +66,7 @@ public class Bot extends ListenerAdapter {
         }
         if (channel.getId().equalsIgnoreCase("734735980568772649") && !event.getAuthor().isBot()) {
             channel.sendMessage("Sending command to server...").queue();
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), msg.getContentRaw());
+            Messages.executeConsoleCommand(msg.getContentRaw());
         }
     }
 }

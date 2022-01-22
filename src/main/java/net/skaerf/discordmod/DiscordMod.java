@@ -11,6 +11,7 @@ public class DiscordMod extends JavaPlugin {
     public static Logger console = Bukkit.getLogger();
     ConfigManager CFGm = new ConfigManager();
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
     public void onEnable() {
         console.info("[DiscordMod] Starting");
