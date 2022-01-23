@@ -13,10 +13,10 @@ import javax.security.auth.login.LoginException;
 public class Bot extends ListenerAdapter {
 
     public static JDA jda;
-    static String defaultChannel;
-    static String consoleChannel;
-    static String token;
-    static String status;
+    public static String defaultChannel;
+    public static String consoleChannel;
+    public static String token;
+    public static String status;
 
 
     public static void sendMessageToConsoleChannel(String message) { // MAKE LOG4J CATCHER
