@@ -8,12 +8,12 @@ import java.io.IOException;
 
 public class ConfigManager {
 
-    public File bot;
-    public File data;
-    public FileConfiguration datacfg;
-    public FileConfiguration botcfg;
+    public static File bot;
+    public static File data;
+    public static FileConfiguration datacfg;
+    public static FileConfiguration botcfg;
 
-    public void createBotFile() {
+    public static void createBotFile() {
         bot = new File(DiscordMod.getPlugin(DiscordMod.class).getDataFolder(), "bot.yml");
         if (!bot.exists()) {
             try {
@@ -37,15 +37,15 @@ public class ConfigManager {
         }
     }
 
-    public FileConfiguration getBotFile() {
+    public static FileConfiguration getBotFile() {
         return botcfg;
     }
 
-    public void reloadBotFile() {
+    public static void reloadBotFile() {
         botcfg = YamlConfiguration.loadConfiguration(bot);
     }
 
-    public void saveBotFile() {
+    public static void saveBotFile() {
         try {
             botcfg.save(bot);
         }
@@ -54,7 +54,7 @@ public class ConfigManager {
         }
     }
 
-    public void createDataFile() {
+    public static void createDataFile() {
         data = new File(DiscordMod.getPlugin(DiscordMod.class).getDataFolder(), "data.yml");
         if (!data.exists()) {
             try {

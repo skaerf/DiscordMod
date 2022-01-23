@@ -9,7 +9,6 @@ import java.util.logging.Logger;
 public class DiscordMod extends JavaPlugin {
 
     public static Logger console = Bukkit.getLogger();
-    ConfigManager CFGm = new ConfigManager();
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
@@ -21,12 +20,12 @@ public class DiscordMod extends JavaPlugin {
         if (!getDataFolder().exists()) {
             getDataFolder().mkdir();
         }
-        CFGm.createBotFile();
-        CFGm.createDataFile();
-        CFGm.reloadBotFile();
-        Bot.token = CFGm.getBotFile().getString("token");
-        Bot.setDefaultChannel(CFGm.getBotFile().getString("default-channel"));
-        Bot.status = CFGm.getBotFile().getString("bot-status");
+        ConfigManager.createBotFile();
+        ConfigManager.createDataFile();
+        ConfigManager.reloadBotFile();
+        Bot.token = ConfigManager.getBotFile().getString("token");
+        Bot.setDefaultChannel(ConfigManager.getBotFile().getString("default-channel"));
+        Bot.status = ConfigManager.getBotFile().getString("bot-status");
         Bot.load();
     }
 
