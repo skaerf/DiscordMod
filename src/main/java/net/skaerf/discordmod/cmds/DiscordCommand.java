@@ -37,7 +37,7 @@ public class DiscordCommand implements CommandExecutor {
                         Bot.setDefaultChannel(ConfigManager.getBotFile().getString("default-channel"));
                         Bot.consoleChannel = ConfigManager.getBotFile().getString("console-channel");
                         Bot.status = ConfigManager.getBotFile().getString("bot-status");
-                        sender.sendMessage(ChatColor.GREEN+"Config reloaded. If bot token was changed, you will still have to restart the server.");
+                        sender.sendMessage(ChatColor.GREEN+"Config reloaded. If the bot token or status was changed, you will still have to restart the server.");
                     }
                 }
             }
