@@ -59,12 +59,12 @@ public class Bot extends ListenerAdapter {
         Message msg = event.getMessage();
         MessageChannel channel = event.getChannel();
         if (channel.getType().equals(ChannelType.PRIVATE) && !event.getAuthor().isBot()) {
-            channel.sendMessage("lol i got a dm").queue();
+            channel.sendMessage("lol i got a dm").queue(); // put custom event here for API to link to other things
         }
-        if (channel.getId().equalsIgnoreCase("933078390259482644") && !event.getAuthor().isBot()) {
+        if (channel.getId().equalsIgnoreCase(defaultChannel) && !event.getAuthor().isBot()) {
             Bukkit.broadcastMessage(Messages.parseMessage(msg));
         }
-        if (channel.getId().equalsIgnoreCase("734735980568772649") && !event.getAuthor().isBot()) {
+        if (channel.getId().equalsIgnoreCase(consoleChannel) && !event.getAuthor().isBot()) {
             channel.sendMessage("Sending command to server...").queue();
             Messages.executeConsoleCommand(msg.getContentRaw());
         }
