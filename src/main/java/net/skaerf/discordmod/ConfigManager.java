@@ -67,4 +67,20 @@ public class ConfigManager {
             }
         }
     }
+    public static FileConfiguration getDataFile() {
+        return datacfg;
+    }
+
+    public static void reloadDataFile() {
+        datacfg = YamlConfiguration.loadConfiguration(data);
+    }
+
+    public static void saveDataFile() {
+        try {
+            datacfg.save(data);
+        }
+        catch (IOException e) {
+            System.out.println("Could not save data.yml file");
+        }
+    }
 }
