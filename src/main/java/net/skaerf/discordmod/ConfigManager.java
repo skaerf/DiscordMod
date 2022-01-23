@@ -60,12 +60,17 @@ public class ConfigManager {
             try {
                 //noinspection ResultOfMethodCallIgnored
                 data.createNewFile();
+                datacfg = YamlConfiguration.loadConfiguration(data);
+                getDataFile().addDefault("linked-accounts", "");
+                getDataFile().options().copyDefaults(true);
+                saveBotFile();
             }
             catch (IOException e) {
                 e.printStackTrace();
                 DiscordMod.console.info("[DiscordMod] Could not create the data.yml file.");
             }
         }
+        datacfg = YamlConfiguration.loadConfiguration(data);
     }
     public static FileConfiguration getDataFile() {
         return datacfg;
