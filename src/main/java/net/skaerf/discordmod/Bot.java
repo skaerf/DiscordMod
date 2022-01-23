@@ -48,7 +48,7 @@ public class Bot extends ListenerAdapter {
     public static void startBot(String token) throws LoginException {
         jda = JDABuilder.createLight(token, GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES)
                 .addEventListeners(new Bot())
-                .setActivity(Activity.playing("SSMC | v0.0.7"))
+                .setActivity(Activity.playing(status+" | v"+DiscordMod.getPlugin(DiscordMod.class).getDescription().getVersion()))
                 .setStatus(OnlineStatus.DO_NOT_DISTURB)
                 .build();
         //Bot.sendMessageToDefault("**Server has started**");
