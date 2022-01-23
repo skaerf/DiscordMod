@@ -37,7 +37,7 @@ public class DiscordCommand implements CommandExecutor {
                             break;
                         }
                     }
-                    if (preExisting) {
+                    if (!preExisting) {
                         String code = DiscordAccountLink.generateNewCode(player);
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aPlease DM "+Bot.username+" through Discord with the code "+code+". This will link your Discord account to your Minecraft account."));
                     }
