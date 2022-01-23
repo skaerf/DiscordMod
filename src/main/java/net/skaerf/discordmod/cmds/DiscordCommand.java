@@ -10,6 +10,9 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.List;
+import java.util.Objects;
+
 public class DiscordCommand implements CommandExecutor {
 
     @Override
@@ -24,8 +27,20 @@ public class DiscordCommand implements CommandExecutor {
             }
             else {
                 if (args[0].equalsIgnoreCase("link")) {
-                    String code = DiscordAccountLink.generateNewCode(player);
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aPlease DM DiscordMod through Discord with the code "+code+". This will link your Discord account to your Minecraft account."));
+                    boolean preExisting = false;
+                    List<String> linkedAccounts = ConfigManager.getDataFile().getStringList("linked-accounts");
+                    for (String linkedAccount : linkedAccounts) {
+                        String[] uuidAndId = linkedAccount.split(":");
+                        if (Objects.equals(uuidAndId[0], player.getUniqueId().toString())) {
+                            preExisting = true;
+                            player.sendMessage(ChatColor.RED + "Your Minecraft account is already linked to a Discord account!"); // TODO add unlink system
+                            break;
+                        }
+                    }
+                    if (preExisting) {
+                        String code = DiscordAccountLink.generateNewCode(player);
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aPlease DM "+Bot.username+" through Discord with the code "+code+". This will link your Discord account to your Minecraft account."));
+                    }
                 }
                 if (args[0].equalsIgnoreCase("reinit")) {
                     if (!sender.hasPermission("discordmod.reinit")) {

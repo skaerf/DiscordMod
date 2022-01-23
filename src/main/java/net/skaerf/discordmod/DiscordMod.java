@@ -30,7 +30,7 @@ public class DiscordMod extends JavaPlugin {
     }
 
     public void onDisable() {
-        //Bot.sendMessageToDefault("**Server has stopped**"); FIX THIS. ON BOT INIT, BUKKIT RUNNABLE REPEATING SEND UNTIL DISCORD CONFIRMS IT WORKED
+        //Bot.sendMessageToDefault("**Server has stopped**"); TODO FIX THIS. ON BOT INIT, BUKKIT RUNNABLE REPEATING SEND UNTIL DISCORD CONFIRMS IT WORKED
     }
 
 }

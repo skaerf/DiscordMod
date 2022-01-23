@@ -7,8 +7,12 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 import javax.security.auth.login.LoginException;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public class Bot extends ListenerAdapter {
 
@@ -17,6 +21,7 @@ public class Bot extends ListenerAdapter {
     public static String consoleChannel;
     public static String token;
     public static String status;
+    public static String username;
 
 
     public static void sendMessageToConsoleChannel(String message) { // MAKE LOG4J CATCHER
@@ -52,14 +57,30 @@ public class Bot extends ListenerAdapter {
                 .setStatus(OnlineStatus.DO_NOT_DISTURB)
                 .build();
         //Bot.sendMessageToDefault("**Server has started**");
+        username = jda.getSelfUser().getName();
     }
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
         Message msg = event.getMessage();
+        String text = msg.getContentRaw();
         MessageChannel channel = event.getChannel();
         if (channel.getType().equals(ChannelType.PRIVATE) && !event.getAuthor().isBot()) {
-            channel.sendMessage("lol i got a dm").queue(); // put custom event here for API to link to other things
+            //channel.sendMessage("lol i got a dm").queue(); // TODO put custom event here for API to link to other things
+            if (msg.getContentRaw().length() == 5) {
+                for(Map.Entry<Player, String> entry: DiscordAccountLink.codes.entrySet()) {
+                    if(Objects.equals(entry.getValue(), text)) {
+                        channel.sendMessage("Account found! Minecraft player `"+entry.getKey().getName()+"` is now linked to <@"+msg.getAuthor().getId()+">.").queue();
+                        DiscordAccountLink.successfulLink(entry.getKey(), msg.getAuthor().getName());
+                        List<String> linkedAccounts = ConfigManager.getDataFile().getStringList("linked-accounts");
+                        linkedAccounts.add(entry.getKey().getUniqueId()+":"+msg.getAuthor().getId());
+                        ConfigManager.getDataFile().set("linked-accounts", linkedAccounts);
+                        ConfigManager.saveDataFile();
+                        DiscordAccountLink.codes.remove(entry.getKey());
+                        break;
+                    }
+                }
+            }
         }
         if (channel.getId().equalsIgnoreCase(defaultChannel) && !event.getAuthor().isBot()) {
             Bukkit.broadcastMessage(Messages.parseMessage(msg));
