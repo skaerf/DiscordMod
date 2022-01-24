@@ -39,8 +39,7 @@ public class Bot extends ListenerAdapter {
     }
 
     public static void  sendMessageToUser(String userID, String message) {
-        User user = jda.getUserById(userID);
-        user.openPrivateChannel().complete().sendMessage(message).queue();
+        jda.retrieveUserById(userID).complete().openPrivateChannel().complete().sendMessage(message).queue();
     }
 
     public static void setDefaultChannel(String channelID) {
