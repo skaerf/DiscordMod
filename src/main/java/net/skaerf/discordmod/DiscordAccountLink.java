@@ -8,9 +8,9 @@ import java.util.Random;
 
 public class DiscordAccountLink {
 
-    public static HashMap<Player, String> codes = new HashMap<>();
+    public static final HashMap<Player, String> codes = new HashMap<>();
 
-    static Random rand = new Random();
+    static final Random rand = new Random();
     static String code = "";
 
     @SuppressWarnings("StringConcatenationInLoop")
