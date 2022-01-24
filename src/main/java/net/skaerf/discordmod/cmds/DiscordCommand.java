@@ -4,6 +4,7 @@ import net.skaerf.discordmod.Bot;
 import net.skaerf.discordmod.ConfigManager;
 import net.skaerf.discordmod.DiscordAccountLink;
 import net.skaerf.discordmod.DiscordMod;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -12,6 +13,7 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 public class DiscordCommand implements CommandExecutor {
 
@@ -39,7 +41,34 @@ public class DiscordCommand implements CommandExecutor {
                     }
                     if (!preExisting) {
                         String code = DiscordAccountLink.generateNewCode(player);
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aPlease DM "+Bot.username+" through Discord with the code "+code+". This will link your Discord account to your Minecraft account."));
+                        player.sendMessage(ChatColor.GREEN+"Please DM "+Bot.username+" through Discord with the code "+code+". This will link your Discord account to your Minecraft account.");
+                    }
+                }
+                if (args[0].equalsIgnoreCase("unlink")) {
+                    boolean linkExists = false;
+                    List<String> linkedAccounts = ConfigManager.getDataFile().getStringList("linked-accounts");
+                    int i = -1;
+                    String userID = "";
+                    String userUUID = "";
+                    for (String linkedAccount : linkedAccounts) {
+                        i++;
+                        String[] uuidAndId = linkedAccount.split(":");
+                        if (Objects.equals(uuidAndId[0], player.getUniqueId().toString())) {
+                            userID = uuidAndId[1];
+                            userUUID = uuidAndId[0];
+                            linkExists = true;
+                            break;
+                        }
+                    }
+                    if (!linkExists) {
+                        player.sendMessage(ChatColor.RED+"Your Minecraft account is not linked to a Discord account!");
+                    }
+                    else {
+                        Bot.sendMessageToUser(userID,"This Discord account has been unlinked from Minecraft account `"+ Bukkit.getPlayer(UUID.fromString(userUUID)).getName()+"`.");
+                        linkedAccounts.remove(linkedAccounts.get(i));
+                        ConfigManager.getDataFile().set("linked-accounts", linkedAccounts);
+                        ConfigManager.saveDataFile();
+                        player.sendMessage(ChatColor.GREEN+"Your Minecraft and Discord accounts have been unlinked!");
                     }
                 }
                 if (args[0].equalsIgnoreCase("reinit")) {
