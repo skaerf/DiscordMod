@@ -2,7 +2,6 @@ package net.skaerf.discordmod;
 
 import net.dv8tion.jda.api.*;
 import net.dv8tion.jda.api.entities.*;
-import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.GatewayIntent;
@@ -25,7 +24,7 @@ public class Bot extends ListenerAdapter {
     public static String username;
 
 
-    public static void sendMessageToConsoleChannel(String message) { // MAKE LOG4J CATCHER
+    public static void sendMessageToConsoleChannel(String message) { // TODO MAKE LOG4J CATCHER
         TextChannel channel = jda.getTextChannelById(consoleChannel);
         if (channel != null) {
             channel.sendMessage(message).queue();

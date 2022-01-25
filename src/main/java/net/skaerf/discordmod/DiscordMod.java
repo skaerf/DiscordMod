@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 
 public class DiscordMod extends JavaPlugin {
 
-    public static Logger console = Bukkit.getLogger();
+    public static final Logger console = Bukkit.getLogger();
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
