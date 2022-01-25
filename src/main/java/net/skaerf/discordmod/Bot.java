@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.GatewayIntent;
+import net.skaerf.discordmod.customevent.DMReceivedEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -70,7 +71,8 @@ public class Bot extends ListenerAdapter {
         String text = msg.getContentRaw();
         MessageChannel channel = event.getChannel();
         if (channel.getType().equals(ChannelType.PRIVATE) && !event.getAuthor().isBot()) {
-            //channel.sendMessage("lol i got a dm").queue(); // TODO put custom event here for API to link to other things
+            DMReceivedEvent receivedEvent = new DMReceivedEvent(msg.getAuthor().getId(), msg.getContentRaw());
+            Bukkit.getPluginManager().callEvent(receivedEvent);
             if (msg.getContentRaw().length() == 5) {
                 for(Map.Entry<Player, String> entry: DiscordAccountLink.codes.entrySet()) {
                     if(Objects.equals(entry.getValue(), text)) {
